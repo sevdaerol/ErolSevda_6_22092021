@@ -4,6 +4,8 @@ const User = require('../models/User');
 
 const jwt = require('jsonwebtoken'); //importer package pour l'authentification de tokens
 
+require('dotenv').config()
+
 exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10) //saler le mdp 10fois
     .then(hash => {
@@ -33,7 +35,7 @@ exports.login = (req, res, next) => {
             userId: user._id,
             token: jwt.sign( //sign pour encoder un nvx token
                 { userId: user._id },
-                'RANDOM_TOKEN_SECRET',
+                process.env.SECRET_TOKEN,
                 { expiresIn: '24h' }  //duree de validitee de token = se reconnecter tout les 24h
               )
           });
