@@ -8,6 +8,8 @@ const path = require("path");
 
 const app = express();
 
+const helmet = require("helmet"); //securiser express avec helmet
+
 const saucesRoutes = require("./routes/sauces");
 
 const userRoutes = require("./routes/user");
@@ -23,6 +25,8 @@ mongoose
   .then(() => console.log("Connexion à MongoDB réussie !"))
   .catch(() => console.log("Connexion à MongoDB échouée !"));
 
+//ajout de helmet
+app.use(helmet());
 //ajout de headers
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*"); // * = acceder a api depuis nimporte quel origin
