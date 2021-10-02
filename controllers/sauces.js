@@ -16,7 +16,7 @@ exports.createSauce = (req, res, next) => {
   });
   sauce
     .save() //methode save pour enregistree Sauce dans la base de donnees = renvoi une promise
-    .then(() => res.status(201).json({ message: "Objet enregistré !" }))
+    .then(() => res.status(201).json({ message: "Added!" }))
     .catch((error) => res.status(400).json({ error }));
 };
 
@@ -31,7 +31,7 @@ exports.modifySauce = (req, res, next) => {
     : { ...req.body };
   sauces
     .updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id }) //methode updateone pour mettre ajour
-    .then(() => res.status(200).json({ message: "Objet modifié !" }))
+    .then(() => res.status(200).json({ message: "Updated!" }))
     .catch((error) => res.status(400).json({ error }));
 };
 
@@ -44,7 +44,7 @@ exports.deleteSauce = (req, res, next) => {
         //fonction unlink de fs
         sauces
           .deleteOne({ _id: req.params.id }) //methode delete
-          .then(() => res.status(200).json({ message: "Objet supprimé !" }))
+          .then(() => res.status(200).json({ message: "Deleted!" }))
           .catch((error) => res.status(400).json({ error }));
       });
     })
@@ -52,11 +52,56 @@ exports.deleteSauce = (req, res, next) => {
 };
 
 exports.likeDislikeSauces = (req, res, next) => {
-  let like = req.body.like
-  let userId = req.body.userId
-  let sauceId = req.params.id
+  sauces.findOne({ _id: req.params.id })
+  .then((sauce) => {
 
- 
+    if (req.body.like === 1){
+
+      if (!sauce.usersLiked.includes(req.body.userId)){
+        sauce.usersLiked.push(req.body.userId)
+        sauce.likes++;
+        sauce.save()
+        .then(() => res.status(201).json({ message: "Liked!" }))
+        .catch((error) => res.status(400).json({ error }));
+      } else {
+        res.status(403).json({ message: "Already liked!"})
+        .catch((error) => res.status(400).json({ error }));
+      }
+
+    } else if (req.body.like === -1){
+
+      if (!sauce.usersDisliked.includes(req.body.userId)){
+        sauce.usersDisliked.push(req.body.userId)
+        sauce.dislikes++;
+        sauce.save()
+        .then(() => res.status(201).json({ message: "Disliked!" }))
+        .catch((error) => res.status(400).json({ error }));
+      }
+      else {
+        res.status(403).json({ message: "Already disliked!"})
+        .catch((error) => res.status(400).json({ error }));
+      }
+
+    } else if (req.body.like === 0) {
+      if (sauce.usersLiked.includes(req.body.userId)){
+        sauce.usersLiked.pull(req.body.userId)
+        sauce.likes--
+        sauce.save()
+        .then(() => res.status(201).json({ message: "Unliked!" }))
+        .catch((error) => res.status(400).json({ error }));
+      } else if (sauce.usersDisliked.includes(req.body.userId)) {
+        sauce.usersDisliked.pull(req.body.userId)
+        sauce.dislikes--;
+        sauce.save()
+        .then(() => res.status(201).json({ message: "Undisliked!" }))
+        .catch((error) => res.status(400).json({ error }));
+      } else {
+        res.status(403).json({ message: "You didn't interact with the sauce yet!"})
+        .catch((error) => res.status(400).json({ error }));
+      }
+    }
+
+  }).catch((error) => res.status(500).json({ error }));
 }
 
 exports.getOneSauce = (req, res, next) => {
