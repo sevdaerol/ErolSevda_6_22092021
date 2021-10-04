@@ -1,4 +1,4 @@
-const http = require('http');  //importer package http natif de node poir creer un serveur
+const http = require('http');  //importer package http natif de node pour creer un serveur
 
 const app = require('./app');
 
