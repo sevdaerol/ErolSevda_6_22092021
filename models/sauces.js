@@ -1,6 +1,6 @@
 const mongoose = require("mongoose"); //importer mongoose
 
-//schema de donnees 
+//schema de donnees pour les sauces creer dans models => pour importer dans controllers/sauces
 const sauceSchema = mongoose.Schema({
   userId: { type: String, required: true },
   name: { type: String, required: true },
@@ -15,5 +15,4 @@ const sauceSchema = mongoose.Schema({
   usersDisliked: { type: ["String <userId>"], required: false },
 });
 
-
-module.exports = mongoose.model("sauce", sauceSchema); //exportee ce schema
+module.exports = mongoose.model("sauce", sauceSchema); //exportee ce schema pour rendre dispo pour express
