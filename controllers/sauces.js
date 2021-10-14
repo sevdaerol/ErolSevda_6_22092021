@@ -1,4 +1,4 @@
-const sauces = require("../models/sauces"); //importee Sauces
+const sauces = require("../models/sauces"); //importee Sauces depuis models/sauces 
 
 const fs = require("fs"); //package fs de node
 
@@ -8,7 +8,7 @@ exports.createSauce = (req, res, next) => {
   delete sauceObject._id; //supprimer le faux id fournis par frontend => le nvx va etre fournis par mongoose
   const sauce = new sauces({
     ...sauceObject, //operateur spread = raccourci
-    imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
+    imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,  
     likes: 0,  //likes
     dislikes: 0,  //dislikes
     usersLiked: [' '], //tableau de like 

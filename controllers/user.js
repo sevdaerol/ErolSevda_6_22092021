@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt'); //importer bcrypte
 
 const User = require('../models/User');
 
@@ -6,8 +6,9 @@ const jwt = require('jsonwebtoken'); //importer package pour l'authentification 
 
 require('dotenv').config()
 
+//fonction d'inscription
 exports.signup = (req, res, next) => {
-    bcrypt.hash(req.body.password, 10) //saler le mdp 10fois
+    bcrypt.hash(req.body.password, 10) //saler le mdp 10fois avec la fonction pour hacher le mdp
     .then(hash => {
       const user = new User({
         email: req.body.email,
@@ -20,23 +21,24 @@ exports.signup = (req, res, next) => {
     .catch(error => res.status(500).json({ error }));
 };
 
+//fonction de conexion
 exports.login = (req, res, next) => {
     User.findOne({ email: req.body.email })
     .then(user => {
       if (!user) {
         return res.status(401).json({ error: 'Utilisateur non trouvé !' });
       }
-      bcrypt.compare(req.body.password, user.password)
+      bcrypt.compare(req.body.password, user.password)  //comparer' le mdp saisie avec le hash enregistree dans user
         .then(valid => {
           if (!valid) {
             return res.status(401).json({ error: 'Mot de passe incorrect !' });
           }
           res.status(200).json({
             userId: user._id,
-            token: jwt.sign( //sign pour encoder un nvx token
+            token: jwt.sign( //sign pour encoder un nouveaux token
                 { userId: user._id },
                 process.env.SECRET_TOKEN,
-                { expiresIn: '24h' }  //duree de validitee de token = se reconnecter tout les 24h
+                { expiresIn: '72h' }  //duree de validitee de token = se reconnecter tout les 24h
               )
           });
         })
