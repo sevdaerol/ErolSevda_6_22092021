@@ -1,10 +1,10 @@
 const express = require("express"); //importer express
 
-const bodyParser = require("body-parser"); //importer body parser pour extraire l'objet json qui provien de frontend
+const bodyParser = require("body-parser"); //pour rendre le corps de la requete facilement exploitable
 
-const mongoose = require("mongoose"); //importee mongoose pour connecter a la base de donnee mongodb
+const mongoose = require("mongoose"); //importee mongoose = mapper (odm) pour connecter a la base de donnee mongodb
 
-const path = require("path");  //importer path pour avoir accees au chemin de systeme de fichier
+const path = require("path");  //importer path pour avoir accees au chemin de systeme de fichier =variable d'environnement
 
 const app = express();
 
@@ -50,3 +50,5 @@ app.use("/api/sauces", saucesRoutes);
 app.use("/api/auth", userRoutes); 
 
 module.exports = app;  //exporter app pour y acceder depuis les autres fichiers
+
+//terminer

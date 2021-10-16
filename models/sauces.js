@@ -16,3 +16,4 @@ const sauceSchema = mongoose.Schema({
 });
 
 module.exports = mongoose.model("sauce", sauceSchema); //exportee ce schema pour rendre dispo pour express
+//terminer

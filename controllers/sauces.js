@@ -1,6 +1,6 @@
 const sauces = require("../models/sauces"); //importee Sauces depuis models/sauces 
 
-const fs = require("fs"); //package fs de node
+const fs = require("fs"); //package fs de node pour permettre a node d'acceder aau systeme de fichier
 
 exports.createSauce = (req, res, next) => {
   //creer instance du modele Sauce
@@ -119,3 +119,6 @@ exports.getAllSauce = (req, res, next) => {
     .then((sauces) => res.status(200).json(sauces))
     .catch((error) => res.status(400).json({ error }));
 };
+
+
+//terminer

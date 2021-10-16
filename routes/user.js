@@ -8,3 +8,5 @@ router.post('/signup', userCtrl.signup);
 router.post('/login', userCtrl.login);
 
 module.exports = router;  //exporter router pour l'importer dans app.js
+
+//terminer

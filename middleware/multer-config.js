@@ -18,3 +18,5 @@ const storage = multer.diskStorage({  //indiquer a multer la logique pour enregi
 });
 
 module.exports = multer({storage: storage}).single('image');  //fichier unique= single, telechargements de fichier image
+
+//terminer

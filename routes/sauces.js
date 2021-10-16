@@ -8,7 +8,6 @@ const multer = require("../middleware/multer-config");  //importer middleware mu
 
 const saucesCtrl = require("../controllers/sauces"); //importer la logique de nos routes depuis controllers
 
-//un midddleware => objet; req res next
 router.post("/", auth, multer, saucesCtrl.createSauce);  // on protege les routes avec auth depuis le middleware/auth
 
 //route pour supprimer un objet
@@ -27,3 +26,4 @@ router.get("/", auth, saucesCtrl.getAllSauce);
 router.post("/:id/like", auth, saucesCtrl.likeDislikeSauces);
 
 module.exports = router; 
+//terminer
