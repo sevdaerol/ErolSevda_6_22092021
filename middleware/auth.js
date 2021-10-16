@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');  //importee jsonwebtoken
 require('dotenv').config();
 
-module.exports = (req, res, next) => {  //middleware pour protegr les routes selectionnee
+module.exports = (req, res, next) => {  //middleware pour proteger les routes selectionnee
   try {
     const token = req.headers.authorization.split(' ')[1]; //split pour recuperer tout apres l'espace = deuxieme element du token
     const decodedToken = jwt.verify(token, process.env.SECRET_TOKEN); //verify pour decoder notre token
